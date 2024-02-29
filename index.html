@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+</head>
+<body>
+
+    <label for="futureDate">Enter Future Date:</label>
+    <input type="date" id="futureDate">
+    <button onclick="calculateAndDisplay()">Calculate</button>
+
+    <p id="remainingTime"></p>
+
+    <script>
+        function calculateTimeDifference() {
+            let userInput = document.getElementById('futureDate').value;
+            let futureDate = new Date(userInput);
+
+            // Check if the user input is a valid date
+            if (isNaN(futureDate.getTime())) {
+                return "Invalid date input. Please enter a valid date.";
+            }
+
+            // Calculate the time difference in milliseconds between the future date and the current date
+            let timeDifference = futureDate - new Date();
+
+            // Calculate days, hours, minutes, and seconds using appropriate divisions
+            let days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+            let hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+            // Return an object containing the calculated values
+            return { days, hours, minutes, seconds };
+        }
+
+        function calculateAndDisplay() {
+            // Call the function to calculate the time difference
+            let remainingTime = calculateTimeDifference();
+
+            // Display the remaining time on the webpage
+            document.getElementById('remainingTime').textContent = (typeof remainingTime === 'string') ? remainingTime : `Remaining time: ${remainingTime.days} days, ${remainingTime.hours} hours, ${remainingTime.minutes} minutes, ${remainingTime.seconds} seconds`;
+        }
+    </script>
+
+</body>
+</html>
